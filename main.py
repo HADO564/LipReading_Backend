@@ -1,13 +1,17 @@
-from flask import Flask
-
-port = 5000
-
+from flask import Flask, request
+import json
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+@app.route('/rec', methods=['POST'])
+def rec():
+    data = request.get_data()
+    url = 'http://localhost:5001/rec'
+    headers = {'Content-Type': 'application/json'}
 
-if __name__ == '__main__':
-    app.run(port=port)
-    
+    # instead of sending the data, print the details of the data being received in the stream
+    print(json.loads(data))
+    # response = requests.post(url, data=data, headers=headers)
+    return data
+
+if __name__ == "__main__":
+    app.run(debug=True)
